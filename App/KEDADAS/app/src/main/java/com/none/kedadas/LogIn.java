@@ -14,16 +14,16 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    protected void onCick(){
+    protected void onClick(){
 
-        String _phone = getPhoneNumber();
+        //String _phone = getPhoneNumber();
         //TODO we have to check if we have the pair android id-phone number on ur database
         /*if (_phone.isEmpty()){
 
             System.out.println("Phone not available with the aplpication");
 
         }*/
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, InitialPage.class);
         startActivity(intent);
     }
 
