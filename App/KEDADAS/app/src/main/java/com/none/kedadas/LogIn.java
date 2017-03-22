@@ -20,7 +20,7 @@ public class LogIn extends AppCompatActivity {
         Intent intent = new Intent(this, InitialPage.class);
         startActivity(intent);
 
-        //String _phone = getPhoneNumber();
+        //  String _phone = getPhoneNumber();
         //TODO we have to check if we have the pair android id-phone number on ur database
         /*if (_phone.isEmpty()){
 
