@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 public class LogIn extends AppCompatActivity {
 
@@ -20,7 +21,16 @@ public class LogIn extends AppCompatActivity {
         Intent intent = new Intent(this, InitialPage.class);
         startActivity(intent);
 
-        //  String _phone = getPhoneNumber();
+        try {
+            String _phone = getPhoneNumber();
+        } catch (SecurityException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), "No se pudo leer el número de teléfono", Toast.LENGTH_LONG);
+            toast.show();
+            System.out.println("Error!");
+            // close current activity
+            finish();
+        }
+
         //TODO we have to check if we have the pair android id-phone number on ur database
         /*if (_phone.isEmpty()){
 
@@ -36,8 +46,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     //This method is used to take the phone number from the device automatically
-    private String getPhoneNumber(){
-
+    private String getPhoneNumber() throws SecurityException{
         TelephonyManager mTelephonyManager;
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         return mTelephonyManager.getLine1Number();
