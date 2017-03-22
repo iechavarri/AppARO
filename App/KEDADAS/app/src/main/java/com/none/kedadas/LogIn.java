@@ -17,18 +17,19 @@ public class LogIn extends AppCompatActivity {
 
     public void onClick(View view){
 
-        Intent intent = new Intent(this, InitialPage.class);
+        Intent intent = new Intent(this, MainPage.class);
         startActivity(intent);
 
+        //Si descomentamos tod est, podremos usar la parte que pide el numero de telefono
         //  String _phone = getPhoneNumber();
-        //TODO we have to check if we have the pair android id-phone number on ur database
+        //TODO we have to check if we have the pair android id-phone number on our database
         /*if (_phone.isEmpty()){
 
             System.out.println("Phone not available with the aplpication");
 
         }else{
 
-            Intent intent = new Intent(this, InitialPage.class);
+            Intent intent = new Intent(this, MainPage.class);
             startActivity(intent);
 
         }*/
