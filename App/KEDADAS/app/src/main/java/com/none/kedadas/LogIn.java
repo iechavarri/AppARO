@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.content.Intent;
+import android.view.View;
 
 public class LogIn extends AppCompatActivity {
 
@@ -14,7 +15,10 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    protected void onClick(){
+    public void onClick(View view){
+
+        Intent intent = new Intent(this, InitialPage.class);
+        startActivity(intent);
 
         //String _phone = getPhoneNumber();
         //TODO we have to check if we have the pair android id-phone number on ur database
@@ -22,9 +26,13 @@ public class LogIn extends AppCompatActivity {
 
             System.out.println("Phone not available with the aplpication");
 
+        }else{
+
+            Intent intent = new Intent(this, InitialPage.class);
+            startActivity(intent);
+
         }*/
-        Intent intent = new Intent(this, InitialPage.class);
-        startActivity(intent);
+
     }
 
     //This method is used to take the phone number from the device automatically
