@@ -4,17 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by diego on 15/03/2017.
+ * Created by diego on 22/03/2017.
  */
 
-public class InitialPage extends AppCompatActivity{
-
+public class Ayuda extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kedadas_list);
-
+        setContentView(R.layout.activity_ayuda);
     }
-
 }
