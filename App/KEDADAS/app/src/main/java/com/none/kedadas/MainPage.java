@@ -15,7 +15,7 @@ public class MainPage extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kedadas_list);
+        setContentView(R.layout.activity_main_page);
 
     }
 
