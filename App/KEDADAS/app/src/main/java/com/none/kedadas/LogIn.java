@@ -19,6 +19,7 @@ public class LogIn extends AppCompatActivity {
 
         Intent intent = new Intent(this, MainPage.class);
         startActivity(intent);
+        finish();
 
         //Si descomentamos tod est, podremos usar la parte que pide el numero de telefono
         //  String _phone = getPhoneNumber();

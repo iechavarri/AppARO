@@ -28,7 +28,7 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FInalizadas" />
+        android:text="Finalizadas" />
 
     <ListView
         android:layout_width="match_parent"

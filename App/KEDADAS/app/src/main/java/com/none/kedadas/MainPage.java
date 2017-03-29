@@ -19,28 +19,31 @@ public class MainPage extends AppCompatActivity{
 
     }
 
-    protected void toNuevaKedada(View view){
+    public void toNuevaKedada(View view){
 
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, NuevaKedada.class);
         startActivity(intent);
 
     }
 
-    protected void toOtrasKedadas(View view){
+    public void onClick(View view){
 
-        Intent intent = new Intent(this, MainPage.class);
+        /*Intent intent = new Intent(this, OtrasKedadas.class);
+        startActivity(intent);*/
+        Intent intent = new Intent (this, MasKedadas.class);
+        startActivity(intent);
+
+    }
+
+    public void toConfiguracion(View view){
+
+        Intent intent = new Intent(this, Configuracion.class);
         startActivity(intent);
     }
 
-    protected void toConfiguracion(View view){
+    public void toAyuda(View view){
 
-        Intent intent = new Intent(this, MainPage.class);
-        startActivity(intent);
-    }
-
-    protected void toAyuda(View view){
-
-        Intent intent = new Intent(this, MainPage.class);
+        Intent intent = new Intent(this, Ayuda.class);
         startActivity(intent);
     }
 

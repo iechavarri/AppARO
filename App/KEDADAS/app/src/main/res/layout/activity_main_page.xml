@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.75"
-        android:text="Nueva Kedada"
-        android:onClick="toNuevaKedada"/>
+        android:onClick="toNuevaKedada"
+        android:text="Nueva Kedada" />
 
     <Button
         android:id="@+id/button3"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.06"
         android:text="Otras kedadas"
-        android:onClick="toOtrasKedadas"/>
+        android:onClick="onClick"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="191dp"
+            android:layout_width="181dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="191dp"
+            android:layout_width="181dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
