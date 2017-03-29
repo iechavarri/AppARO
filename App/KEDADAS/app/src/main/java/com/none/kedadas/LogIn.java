@@ -11,7 +11,10 @@ import android.telephony.TelephonyManager;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class LogIn extends AppCompatActivity {
     private static final String TAG = LogIn.class.getSimpleName();
@@ -50,7 +53,7 @@ public class LogIn extends AppCompatActivity {
 
         //Intent intent = new Intent(this, MainPage.class);
         //startActivity(intent);
-        PhoneInfo phoneData;
+        PhoneInfo phoneData = new PhoneInfo("","");
         try {
             phoneData = getPhoneNumber();
         } catch (SecurityException e) {
@@ -59,6 +62,8 @@ public class LogIn extends AppCompatActivity {
             Log.d(TAG, "Security exception",e);
             // close current activity
         }
+        TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+        infoTV.setText("deviceId: " + phoneData.deviceId + "\nsimId: " + phoneData.simId);
         //TODO we have to check if we have the pair android id-phone number on ur database with phoneData (moving PhoneInfo class to its own class)
         Intent intent = new Intent(this, MainPage.class);
         startActivity(intent);
