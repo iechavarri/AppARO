@@ -28,7 +28,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     // add the Mapbox SDK dependency below
-    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.2@aar'){
-        transitive=true
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    dependencies {
+        compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.2@aar'){
+            transitive=true
+        }
     }
 }
