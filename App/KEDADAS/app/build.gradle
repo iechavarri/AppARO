@@ -29,14 +29,19 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     // add the Mapbox SDK dependency below
     compile 'com.android.support:appcompat-v7:23.0.1'
-    dependencies {
-        compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.2@aar'){
-            transitive=true
-        }
-    }
-    dependencies {
-        compile 'com.google.android.gms:play-services:10.2.1'
-        compile 'com.google.firebase:firebase-ads:10.2.0'
 
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.2@aar') {
+        transitive = true
     }
+
+    compile 'com.google.android.gms:play-services:10.2.1'
+    compile 'com.google.firebase:firebase-ads:10.2.0'
+
+    //This shit is for retrofit &Co
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+
 }

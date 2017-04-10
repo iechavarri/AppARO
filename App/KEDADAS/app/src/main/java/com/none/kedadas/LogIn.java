@@ -13,10 +13,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import org.w3c.dom.Text;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.google.android.gms.R.id.email;
+
 public class LogIn extends AppCompatActivity {
+    private static final String BASE_URL = "52.43.198.218";
     private static final String TAG = LogIn.class.getSimpleName();
     private static final int READ_PHONE = 1;
     private int tryes = 0;
@@ -115,4 +124,99 @@ public class LogIn extends AppCompatActivity {
             this.simId = simId;
         }
     }
+
+    private ApiInterface getInterfaceService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final ApiInterface mInterfaceService = retrofit.create(ApiInterface.class);
+        return mInterfaceService;
+    }
+
+    private void loginOrRegister(String id, String phone){
+        ApiInterface signIn = this.getInterfaceService();
+        Call<Login> signInService = signIn.authenticate(id,phone);
+        signInService.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                Login mLoginObject = response.body();
+                String returnedResponse = mLoginObject.isLogin;
+                Toast.makeText(LogIn.this, "Returned " + returnedResponse, Toast.LENGTH_LONG).show();
+                //showProgress(false);
+                if (returnedResponse.trim().equals("1")) {
+                    // Succesfull login
+                    Toast toast = Toast.makeText(LogIn.this, "Login Succesfull", Toast.LENGTH_LONG);
+                    toast.show();
+
+                } else {
+                    //Not registered. Automatically register
+                    Toast toast2 = Toast.makeText(LogIn.this, "Not registered. So registering now", Toast.LENGTH_LONG);
+                    toast2.show();
+
+                }
+            }
+        });
+
+
+
+/**
+    private void loginProcessWithRetrofit(final String email, String password){
+        ApiInterface mApiService = this.getInterfaceService();
+        Call<Login> mService = mApiService.authenticate(email, password);
+        mService.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                Login mLoginObject = response.body();
+                String returnedResponse = mLoginObject.isLogin;
+                Toast.makeText(LoginActivity.this, "Returned " + returnedResponse, Toast.LENGTH_LONG).show();
+                //showProgress(false);
+                if(returnedResponse.trim().equals("1")){
+                    // redirect to Main Activity page
+                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    loginIntent.putExtra("EMAIL", email);
+                    startActivity(loginIntent);
+                }
+                if(returnedResponse.trim().equals("0")){
+                    // use the registration button to register
+                    failedLoginMessage.setText(getResources().getString(R.string.registration_message));
+                    mPasswordView.requestFocus();
+                }
+            }
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                call.cancel();
+                Toast.makeText(LoginActivity.this, "Please check your network connection and internet permission", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    private void registrationProcessWithRetrofit(final String email, String password){
+        ApiInterface mApiService = this.getInterfaceService();
+        Call<Login> mService = mApiService.registration(email, password);
+        mService.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                Login mLoginObject = response.body();
+                String returnedResponse = mLoginObject.isLogin;
+                //showProgress(false);
+                if(returnedResponse.trim().equals("1")){
+                    // redirect to Main Activity page
+                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    loginIntent.putExtra("EMAIL", email);
+                    startActivity(loginIntent);
+                }
+                if(returnedResponse.trim().equals("0")){
+                    // use the registration button to register
+                    failedLoginMessage.setText(getResources().getString(R.string.registration_failed));
+                    mPasswordView.requestFocus();
+                }
+            }
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                call.cancel();
+                Toast.makeText(LoginActivity.this, "Please check your network connection and internet permission", Toast.LENGTH_LONG).show();
+            }
+        });
+    }*/
+}
 }
