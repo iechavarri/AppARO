@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 include_once 'database.php';
 
-$app = new SlimSlim();
+$app = new \Slim\Slim();
 
 $app->get('/:id/:phone', function($id, $phone){
     
@@ -11,7 +11,7 @@ $app->get('/:id/:phone', function($id, $phone){
     $databaseObject = new DatabaseLayer();
     $isRegistered = $databaseObject->isUserExist($id, $phone);
     
-    $app = SlimSlim::getInstance();
+    $app = \Slim\Slim::getInstance();
     
     if($isRegistered){
         $app->response->setStatus('200');	
@@ -27,7 +27,7 @@ $app->get('/:id/:phone', function($id, $phone){
 $app->post('/:id/:phone', function($id, $phone){
    // $password = md5($password);
     
-    $app = SlimSlim::getInstance();
+    $app = \Slim\Slim::getInstance();
     
     $databaseObject = new DatabaseLayer();
     $isInserted = $databaseObject->addNewUser($id, $phone);
