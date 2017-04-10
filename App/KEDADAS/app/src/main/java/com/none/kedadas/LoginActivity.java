@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://ec2-52-43-198-218.us-west-2.compute.amazonaws.com/api";
+    public static final String BASE_URL = "http://ec2-52-43-198-218.us-west-2.compute.amazonaws.com/";
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int READ_PHONE = 1;
     private int tryes = 0;
@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                     //Not registered. Automatically register
                     Toast toast2 = Toast.makeText(LoginActivity.this, "Not registered. So registering now", Toast.LENGTH_LONG);
                     toast2.show();
+
 
                 }
             }

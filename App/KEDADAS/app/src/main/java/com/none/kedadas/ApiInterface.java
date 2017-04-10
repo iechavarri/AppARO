@@ -10,8 +10,8 @@ import retrofit2.http.Path;
  */
 
 public interface ApiInterface {
-    @GET("api/{id}/{phone}")
+    @GET("api/index.php/{id}/{phone}")
     Call<Login> authenticate(@Path("id") String id, @Path("phone") String phone);
-    @POST("api/{id}/{phone}")
+    @POST("api/index.php/{id}/{phone}")
     Call<Login> registration(@Path("id") String email, @Path("phone") String phone);
 }
