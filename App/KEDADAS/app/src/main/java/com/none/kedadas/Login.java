@@ -5,5 +5,7 @@ package com.none.kedadas;
  */
 
 public class Login {
+    //This is for resync the repo
+//NOW?
     public String isLogin;
 }

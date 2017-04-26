@@ -3,6 +3,7 @@ package com.none.kedadas;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,15 +29,71 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://ec2-52-43-198-218.us-west-2.compute.amazonaws.com/api";
+    public static final String BASE_URL = "http://ec2-52-43-198-218.us-west-2.compute.amazonaws.com/";
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int READ_PHONE = 1;
+<<<<<<< HEAD
+    private AdView mAdView;
+    private boolean adShown=false;
+    private InterstitialAd mInterstitialAd;
     private int tryes = 0;
+=======
+    private boolean read_phone_allowed = false;
+>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_login);
+<<<<<<< HEAD
+
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this, "ca-app-pub-5411028378208022~7913959997");
+
+        // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
+        // values/strings.xml.
+        mAdView = (AdView) findViewById(R.id.ad_view);
+
+        // Create an ad request. Check your logcat output for the hashed device ID to
+        // get test ads on a physical device. e.g.
+        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest);
+
+        // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
+        // values/strings.xml.
+        mAdView = (AdView) findViewById(R.id.ad_view1);
+
+        // Create an ad request. Check your logcat output for the hashed device ID to
+        // get test ads on a physical device. e.g.
+        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+        adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest);
+
+
+        /*mInterstitialAd = new InterstitialAd(this);
+        // Defined in res/values/strings.xml
+        mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_unit_id));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                startGame();
+            }
+        });*/
+
+=======
+        TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+        infoTV.setText("Es necesario leer el estado del teléfono para la identificación");
+>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -38,14 +102,13 @@ public class LoginActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                    read_phone_allowed = true;
+                    TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+                    infoTV.setText("Permisos configurados correctamente");
 
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+                    infoTV.setText("Imposible continuar sin permisos de identificación. Si el problema persiste, reinstala la aplicación");
                 }
                 return;
             }
@@ -55,9 +118,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void onClick(View view) {
+<<<<<<< HEAD
 
         //Intent intent = new Intent(this, MainPage.class);
         //startActivity(intent);
+        // Create the InterstitialAd and set the adUnitId.
+
+        /*if (!adShown){
+
+            showInterstitial();
+            adShown=true;
+
+        }*/
+
+
         PhoneInfo phoneData = new PhoneInfo("","");
         try {
             phoneData = getPhoneNumber();
@@ -66,23 +140,85 @@ public class LoginActivity extends AppCompatActivity {
             toast.show();
             Log.d(TAG, "Security exception",e);
             // close current activity
+=======
+        if (read_phone_allowed) {
+            PhoneInfo phoneData = new PhoneInfo("", "");
+            try {
+                phoneData = getPhoneNumber();
+                //TODO we have to check if we have the pair android id-phone number on ur database with phoneData (moving PhoneInfo class to its own class)
+                loginOrRegister(phoneData.deviceId, phoneData.simId);
+                TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+                infoTV.setText("deviceId: " + phoneData.deviceId + "\nsimId: " + phoneData.simId);
+                Intent intent = new Intent(this, MainPage.class);
+                startActivity(intent);
+                finish();
+            } catch (SecurityException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Error de permisos", Toast.LENGTH_LONG);
+                toast.show();
+                Log.d(TAG, "Security exception", e);
+                // close current activity
+            }
+        } else {
+            requestReadPhonePermission();
         }
-        TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
-        infoTV.setText("deviceId: " + phoneData.deviceId + "\nsimId: " + phoneData.simId);
-        //TODO we have to check if we have the pair android id-phone number on ur database with phoneData (moving PhoneInfo class to its own class)
-        loginOrRegister(phoneData.deviceId,phoneData.simId);
-        Intent intent = new Intent(this, MainPage.class);
-        startActivity(intent);
-        finish();
     }
+    private void requestReadPhonePermission() {
+        // TODO: Check different cases (ie first deny then allow)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONE);
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Por favor, reinicia la aplicación", Toast.LENGTH_LONG);
+                toast.show();
+            }else{
+            }
+>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
+        }
+    }
+<<<<<<< HEAD
 
+    //Method used to load the Interstitial Ad
+    /*private void startGame() {
+        // Request a new ad if one isn't already loaded, hide the button, and kick off the timer.
+        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mInterstitialAd.loadAd(adRequest);
+            mInterstitialAd.show();
+        }
+
+        mRetryButton.setVisibility(View.INVISIBLE);
+        resumeGame(GAME_LENGTH_MILLISECONDS);
+    }*/
+
+    //Method used to show the intertitial Ad
+    /*private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+            startGame();
+        }
+    }*/
+
+=======
+>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     //This method is used to take the phone number from the device automatically
     private PhoneInfo getPhoneNumber() throws SecurityException{
-        // Here, thisActivity is the current activity
+        TelephonyManager mTelephonyManager;
+        mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        Log.d(TAG, "TelephonyManager.getSimSerialNumber = " + mTelephonyManager.getSimSerialNumber());
+        Log.d(TAG, "TelephonyManager.getDeviceId = " + mTelephonyManager.getDeviceId());
+        Log.d(TAG, "TelephonyManager.getLine1Number = " + mTelephonyManager.getLine1Number());
+        Log.d(TAG, "TelephonyManager.getSubscriberId = " + mTelephonyManager.getSubscriberId());
+        return new PhoneInfo(mTelephonyManager.getDeviceId(), mTelephonyManager.getSimSerialNumber());
+        /*
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
-
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_PHONE_STATE},
+                    READ_PHONE);
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_PHONE_STATE)) {
@@ -104,13 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                 // result of the request.
             }
         }
-        TelephonyManager mTelephonyManager;
-        mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        Log.d(TAG, "TelephonyManager.getSimSerialNumber = " + mTelephonyManager.getSimSerialNumber());
-        Log.d(TAG, "TelephonyManager.getDeviceId = " + mTelephonyManager.getDeviceId());
-        Log.d(TAG, "TelephonyManager.getLine1Number = " + mTelephonyManager.getLine1Number());
-        Log.d(TAG, "TelephonyManager.getSubscriberId = " + mTelephonyManager.getSubscriberId());
-        return new PhoneInfo(mTelephonyManager.getDeviceId(), mTelephonyManager.getSimSerialNumber());
+        */
     }
 
     private class PhoneInfo {
@@ -150,6 +280,7 @@ public class LoginActivity extends AppCompatActivity {
                     //Not registered. Automatically register
                     Toast toast2 = Toast.makeText(LoginActivity.this, "Not registered. So registering now", Toast.LENGTH_LONG);
                     toast2.show();
+
 
                 }
             }
