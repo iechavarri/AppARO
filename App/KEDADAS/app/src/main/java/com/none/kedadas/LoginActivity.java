@@ -32,20 +32,20 @@ public class LoginActivity extends AppCompatActivity {
     public static final String BASE_URL = "http://ec2-52-43-198-218.us-west-2.compute.amazonaws.com/";
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int READ_PHONE = 1;
-<<<<<<< HEAD
+//<<<<<<< HEAD
     private AdView mAdView;
     private boolean adShown=false;
     private InterstitialAd mInterstitialAd;
     private int tryes = 0;
-=======
+//=======
     private boolean read_phone_allowed = false;
->>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
+//>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_login);
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(this, "ca-app-pub-5411028378208022~7913959997");
@@ -90,10 +90,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
 
-=======
+//=======
         TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
         infoTV.setText("Es necesario leer el estado del teléfono para la identificación");
->>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
+//>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void onClick(View view) {
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
         //Intent intent = new Intent(this, MainPage.class);
         //startActivity(intent);
@@ -132,34 +132,35 @@ public class LoginActivity extends AppCompatActivity {
         }*/
 
 
-        PhoneInfo phoneData = new PhoneInfo("","");
+        PhoneInfo phoneData = new PhoneInfo("", "");
         try {
             phoneData = getPhoneNumber();
         } catch (SecurityException e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error de permisos", Toast.LENGTH_LONG);
             toast.show();
-            Log.d(TAG, "Security exception",e);
+            Log.d(TAG, "Security exception", e);
             // close current activity
-=======
-        if (read_phone_allowed) {
-            PhoneInfo phoneData = new PhoneInfo("", "");
-            try {
-                phoneData = getPhoneNumber();
-                //TODO we have to check if we have the pair android id-phone number on ur database with phoneData (moving PhoneInfo class to its own class)
-                loginOrRegister(phoneData.deviceId, phoneData.simId);
-                TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
-                infoTV.setText("deviceId: " + phoneData.deviceId + "\nsimId: " + phoneData.simId);
-                Intent intent = new Intent(this, MainPage.class);
-                startActivity(intent);
-                finish();
-            } catch (SecurityException e) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Error de permisos", Toast.LENGTH_LONG);
-                toast.show();
-                Log.d(TAG, "Security exception", e);
-                // close current activity
+//=======
+            if (read_phone_allowed) {
+                phoneData = new PhoneInfo("", "");
+                try {
+                    phoneData = getPhoneNumber();
+                    //TODO we have to check if we have the pair android id-phone number on ur database with phoneData (moving PhoneInfo class to its own class)
+                    loginOrRegister(phoneData.deviceId, phoneData.simId);
+                    TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+                    infoTV.setText("deviceId: " + phoneData.deviceId + "\nsimId: " + phoneData.simId);
+                    Intent intent = new Intent(this, MainPage.class);
+                    startActivity(intent);
+                    finish();
+                } catch (SecurityException ex) {
+                    toast = Toast.makeText(getApplicationContext(), "Error de permisos", Toast.LENGTH_LONG);
+                    toast.show();
+                    Log.d(TAG, "Security exception", ex);
+                    // close current activity
+                }
+            } else {
+                requestReadPhonePermission();
             }
-        } else {
-            requestReadPhonePermission();
         }
     }
     private void requestReadPhonePermission() {
@@ -172,10 +173,10 @@ public class LoginActivity extends AppCompatActivity {
                 toast.show();
             }else{
             }
->>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
+//>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
     //Method used to load the Interstitial Ad
     /*private void startGame() {
@@ -201,8 +202,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }*/
 
-=======
->>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
+//=======
+//>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     //This method is used to take the phone number from the device automatically
     private PhoneInfo getPhoneNumber() throws SecurityException{
         TelephonyManager mTelephonyManager;
