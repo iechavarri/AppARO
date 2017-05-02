@@ -26,14 +26,9 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    // add the Mapbox SDK dependency below
     compile 'com.android.support:appcompat-v7:23.0.1'
 
-    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.2@aar') {
-        transitive = true
-    }
-
+    //Google PLay services and firebase
     compile 'com.google.android.gms:play-services:10.2.1'
     compile 'com.google.firebase:firebase-ads:10.2.0'
 
@@ -44,4 +39,19 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
 
+    //Firebase core
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    //Firebase database
+    compile 'com.google.firebase:firebase-database:9.6.1'
+    //Firebase auth
+    compile 'com.google.firebase:firebase-auth:9.6.1'
+    //Firebase Messagin and cloud notifications
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
+    //Firebase invites/dynamic links
+    compile 'com.google.firebase:firebase-invites:9.6.1'
+
+    compile 'com.google.android.gms:play-services-auth:10.2.1'
+
+
 }
+apply plugin: 'com.google.gms.google-services'
