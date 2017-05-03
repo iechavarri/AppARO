@@ -1,4 +1,4 @@
-package com.none.kedadas;
+/*package com.none.kedadas;
 
 import android.Manifest;
 import android.content.Context;
@@ -127,12 +127,12 @@ public class LoginActivity extends AppCompatActivity {
         });*/
 
 //=======
-        TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
+      /*  TextView infoTV = (TextView) findViewById(R.id.phoneInfo);
         infoTV.setText("Es necesario leer el estado del teléfono para la identificación");
 //>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    /*public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case READ_PHONE: {
                 // If request is cancelled, the result arrays are empty.
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
-    public void onClick(View view) {
+    /*public void onClick(View view) {
 //<<<<<<< HEAD
 
         //Intent intent = new Intent(this, MainPage.class);
@@ -168,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
         }*/
 
 
-        PhoneInfo phoneData = new PhoneInfo("", "");
+        /*PhoneInfo phoneData = new PhoneInfo("", "");
         try {
             phoneData = getPhoneNumber();
         } catch (SecurityException e) {
@@ -241,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
 //=======
 //>>>>>>> 415c336a22627bcdd71b5eb47bd02adb56a1c0bc
     //This method is used to take the phone number from the device automatically
-    private PhoneInfo getPhoneNumber() throws SecurityException{
+    /*private PhoneInfo getPhoneNumber() throws SecurityException{
         TelephonyManager mTelephonyManager;
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         Log.d(TAG, "TelephonyManager.getSimSerialNumber = " + mTelephonyManager.getSimSerialNumber());
@@ -278,9 +278,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         */
-    }
+    /*}*/
 
-    private class PhoneInfo {
+    /*private class PhoneInfo {
         public String deviceId;
         public String simId;
         public PhoneInfo(String deviceId, String simId) {
@@ -389,5 +389,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }*/
-}
-}
+/*}
+}*/

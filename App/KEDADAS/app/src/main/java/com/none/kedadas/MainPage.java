@@ -60,7 +60,7 @@ public class MainPage extends AppCompatActivity{
 
     public void toConfiguracion(View view){
 
-        Intent intent = new Intent(this, GPS.class);
+        Intent intent = new Intent(this, Tracking.class);
         startActivity(intent);
     }
 
