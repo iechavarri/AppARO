@@ -40,6 +40,8 @@ public class MainPage extends AppCompatActivity{
         // Start loading the ad in the background.
         mAdView.loadAd(adRequest);
 
+
+
     }
 
     public void toNuevaKedada(View view){
