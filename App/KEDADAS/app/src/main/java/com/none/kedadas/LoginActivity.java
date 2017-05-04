@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (user != null) {
                     // TODO Hacer lo que se necesite hacer cuando logeamos.
                     Toast.makeText(getApplicationContext(), "AUTHENTICATED", Toast.LENGTH_LONG).show();
+                    goToMainPage();
 
                 }
             }
@@ -184,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         } else {
             Toast.makeText(this, "This is not working!",
                     Toast.LENGTH_LONG).show();
-            //finish();
+            finish();
 
         }
 
@@ -208,7 +209,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         }
 
-
+    private void goToMainPage(){
+        Intent intent = new Intent(this, MainPage.class);
+        startActivity(intent);
+    }
     @Override
     protected void onStop() {
         super.onStop();
