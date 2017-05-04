@@ -64,7 +64,7 @@ public class Ayuda extends AppCompatActivity {
 
     public void VisitWeb (View view){
 
-        Uri uri = Uri.parse("http://52.43.198.218/");
+        Uri uri = Uri.parse("http://kedadas.tk/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
 
