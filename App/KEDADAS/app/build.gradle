@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('C:/Users/iecha/.android/debug.keystore')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
-
     defaultConfig {
         applicationId "com.none.kedadas"
         minSdkVersion 16
@@ -16,6 +23,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
 }
 
@@ -24,34 +34,30 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
-
     //Google PLay services and firebase
     compile 'com.google.android.gms:play-services:10.2.1'
     compile 'com.google.firebase:firebase-ads:10.2.0'
-
     //This shit is for retrofit &Co
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.code.gson:gson:2.6.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
-
     //Firebase core
-    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-core:10.2.1'
     //Firebase database
-    compile 'com.google.firebase:firebase-database:9.6.1'
+    compile 'com.google.firebase:firebase-database:10.2.1'
     //Firebase auth
-    compile 'com.google.firebase:firebase-auth:9.6.1'
+    compile 'com.google.firebase:firebase-auth:10.2.1'
     //Firebase Messagin and cloud notifications
-    compile 'com.google.firebase:firebase-messaging:9.6.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.1'
     //Firebase invites/dynamic links
-    compile 'com.google.firebase:firebase-invites:9.6.1'
-
+    compile 'com.google.firebase:firebase-invites:10.2.1'
+    //Firebase crash reports
+    compile 'com.google.firebase:firebase-crash:10.2.1'
     compile 'com.google.android.gms:play-services-auth:10.2.1'
-
-
 }
 apply plugin: 'com.google.gms.google-services'

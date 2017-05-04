@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "416059811848",
-    "firebase_url": "https://kedadas-b565e.firebaseio.com",
-    "project_id": "kedadas-b565e",
-    "storage_bucket": "kedadas-b565e.appspot.com"
+    "project_number": "450426138778",
+    "firebase_url": "https://kedadas-7a35e.firebaseio.com",
+    "project_id": "kedadas-7a35e",
+    "storage_bucket": "kedadas-7a35e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:416059811848:android:61a3640f77bb73b4",
+        "mobilesdk_app_id": "1:450426138778:android:61a3640f77bb73b4",
         "android_client_info": {
           "package_name": "com.none.kedadas"
         }
       },
       "oauth_client": [
         {
-          "client_id": "416059811848-9kgr9ntms310nhc303o73ot50iqcd52p.apps.googleusercontent.com",
+          "client_id": "450426138778-cejfc2bstb1a4g65uqvd1069bp47cec9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.none.kedadas",
+            "certificate_hash": "85c2e2cf7497579aade27bdac0c19026f568e8a3"
+          }
+        },
+        {
+          "client_id": "450426138778-sv3hrj4dp0fba1au7fbgorflg3pvta73.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtkpsAG1CJ9Iebcehri8DGQOOP1dwzi9k"
+          "current_key": "AIzaSyAOQPiavCLuPt7sLu74CBgnuqk49_YnoRM"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450426138778-sv3hrj4dp0fba1au7fbgorflg3pvta73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
