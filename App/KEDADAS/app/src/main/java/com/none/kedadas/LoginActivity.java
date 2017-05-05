@@ -190,24 +190,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
     }
-        private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
-            progressBar.setVisibility((View.VISIBLE));
-            signInButton.setVisibility(View.GONE);
+    private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
+        progressBar.setVisibility((View.VISIBLE));
+        signInButton.setVisibility(View.GONE);
 
-            AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(),null);
-            firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    progressBar.setVisibility(View.GONE);
-                    signInButton.setVisibility(View.VISIBLE);
+        AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(),null);
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
+                signInButton.setVisibility(View.VISIBLE);
 
-                    if(!task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(),"R.string.not_firebase_auth",Toast.LENGTH_LONG).show();
-                    }
+                if(!task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),"R.string.not_firebase_auth",Toast.LENGTH_LONG).show();
                 }
-            });
+            }
+        });
 
-        }
+    }
 
     private void goToMainPage(){
         Intent intent = new Intent(this, MainPage.class);
