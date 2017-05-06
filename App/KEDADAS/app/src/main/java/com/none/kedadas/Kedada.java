@@ -1,5 +1,6 @@
 package com.none.kedadas;
 
+import com.google.firebase.database.IgnoreExtraProperties;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,13 +8,19 @@ import java.util.Date;
 /**
  * Created by diego on 22/03/2017.
  */
-
+@IgnoreExtraProperties
 public class Kedada {
 
     String id;
     String nombre;
     Date fecha;
-
+    public Kedada() {
+        // needed for firebase
+    }
+    public Kedada(String nombre, Date fecha) {
+        this.nombre = nombre;
+        this.fecha = fecha;
+    }
     public Kedada(String id, String nombre, Date fecha) {
         this.id = id;
         this.nombre = nombre;

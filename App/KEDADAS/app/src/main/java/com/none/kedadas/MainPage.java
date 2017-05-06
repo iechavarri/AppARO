@@ -8,6 +8,12 @@ import android.view.View;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by diego on 15/03/2017.
@@ -46,9 +52,9 @@ public class MainPage extends AppCompatActivity{
 
     public void toNuevaKedada(View view){
 
-        Intent intent = new Intent(this, NuevaKedada.class);
-        startActivity(intent);
-
+        //Intent intent = new Intent(this, FirebaseTest.class);
+        //startActivity(intent);
+        addSomeTestKDDS();
     }
 
     public void onClick(View view){
@@ -98,5 +104,20 @@ public class MainPage extends AppCompatActivity{
         }
         super.onDestroy();
     }
-
+    private void addSomeTestKDDS() {
+        DateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds");
+        Kedada kdd1 = null, kdd2 = null;
+        try {
+            kdd1 = new Kedada("Primera kdd", dateFormatter.parse("05/05/2017"));
+            kdd2 = new Kedada("Segunda kdd", dateFormatter.parse("06/05/2017"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        DatabaseReference anotherRef;
+        anotherRef = myRef.push();
+        anotherRef.setValue(kdd1);
+        anotherRef = myRef.push();
+        anotherRef.setValue(kdd2);
+    }
 }
