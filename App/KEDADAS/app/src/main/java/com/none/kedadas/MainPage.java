@@ -57,7 +57,7 @@ public class MainPage extends AppCompatActivity{
         addSomeTestKDDS();
     }
 
-    public void onClick(View view){
+    public void masKedadas(View view){
 
         /*Intent intent = new Intent(this, OtrasKedadas.class);
         startActivity(intent);*/
