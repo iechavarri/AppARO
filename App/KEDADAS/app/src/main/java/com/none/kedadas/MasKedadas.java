@@ -1,18 +1,23 @@
 package com.none.kedadas;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TwoLineListItem;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by diego on 23/03/2017.
  */
@@ -26,11 +31,104 @@ public class MasKedadas extends AppCompatActivity {
 
         // Get ListView object from xml
         final ListView listView = (ListView) findViewById(R.id.ActiveKDD);
+        ArrayList<Kedada> kddList = new ArrayList<Kedada>();
 
-        // Create a new Adapter
+        // Create a new Adapter, suitable for our two=element subitems
+        class KedadasBaseAdapter extends BaseAdapter {
+            List<Kedada> _kedadas;
+            LayoutInflater _li;
 
+            public KedadasBaseAdapter(Context context, List<Kedada> kedadas){
+                this._kedadas = kedadas;
+                this._li = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            }
+
+            public void add(Kedada item) {
+                _kedadas.add(item);
+                this.notifyDataSetChanged();
+            }
+            /**
+             * Este método devolverá el número de filas que va
+             * a contener la lista
+             */
+            @Override
+            public int getCount() {
+                return this._kedadas.size();
+            }
+
+            /**
+             * Este método devolverá un elemento en una
+             * posición pasada por parámetro
+             */
+            @Override
+            public Object getItem(int position) {
+                return this._kedadas.get(position);
+            }
+
+            /**
+             * Este método devolverá el identificador
+             * de un elemento de una posición pasada por
+             * parámetro.
+             */
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            /**
+             * Este método será invocado cada vez
+             * que se vaya a crear una vista en la posición
+             * especificada
+             */
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TwoLineListItem twoLineListItem;
+                if (convertView == null){
+                    twoLineListItem = (TwoLineListItem) _li.inflate(android.R.layout.simple_list_item_2, null);
+                } else {
+                    twoLineListItem = (TwoLineListItem) convertView;
+                }
+
+                Kedada item = this._kedadas.get(position);
+                TextView text1 = twoLineListItem.getText1();
+                TextView text2 = twoLineListItem.getText2();
+
+                text1.setText(item.nombre);
+                text2.setText(item.fecha.toString());
+
+
+                text1.setText(item.getNombre());
+                text2.setText(item.getFecha().toString());
+
+                return twoLineListItem;
+            }
+
+        }
+        /*
+                TwoLineListItem twoLineListItem;
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            twoLineListItem = (TwoLineListItem) inflater.inflate(
+                    android.R.layout.simple_list_item_2, null);
+        } else {
+            twoLineListItem = (TwoLineListItem) convertView;
+        }
+
+        TextView text1 = twoLineListItem.getText1();
+        TextView text2 = twoLineListItem.getText2();
+
+        text1.setText(persons.get(position).getName());
+        text2.setText("" + persons.get(position).getAge());
+
+        return twoLineListItem;
+    }
+        */
+        final KedadasBaseAdapter adapter = new KedadasBaseAdapter(this,kddList);
+        /*
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1);
+                android.R.layout.simple_list_item_1, android.R.id.text1);*/
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -53,7 +151,7 @@ public class MasKedadas extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Kedada kdd = dataSnapshot.getValue(Kedada.class);
                 // filter kdd and only add it if it's active
-                adapter.add(kdd.toString());
+                adapter.add(kdd);
             }
 
             // This function is called each time a child item is removed.
