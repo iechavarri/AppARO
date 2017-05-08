@@ -55,8 +55,8 @@ public class Ayuda extends AppCompatActivity {
 
         Intent email = new Intent(Intent.ACTION_SEND);
         email.setData(Uri.parse("mailto:"));
-        email.putExtra(Intent.EXTRA_EMAIL,to);
         email.putExtra(Intent.EXTRA_SUBJECT,subject);
+        email.putExtra(Intent.EXTRA_EMAIL,to);
         email.setType("message/rfc822");
         startActivity(Intent.createChooser(email, "Email "));
 
