@@ -20,6 +20,7 @@
         android:text="Activas" />
 
     <ListView
+        android:id="@+id/ActiveKDD"
         android:layout_width="match_parent"
         android:layout_height="122dp"
         android:layout_weight="0.10" />
@@ -31,6 +32,7 @@
         android:text="Finalizadas" />
 
     <ListView
+        android:id="@+id/PastKDD"
         android:layout_width="match_parent"
         android:layout_height="112dp"
         android:layout_weight="0.08" />
