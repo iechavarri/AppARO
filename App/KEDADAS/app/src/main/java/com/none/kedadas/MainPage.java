@@ -1,13 +1,18 @@
 package com.none.kedadas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -46,15 +51,26 @@ public class MainPage extends AppCompatActivity{
         // Start loading the ad in the background.
         mAdView.loadAd(adRequest);
 
+ /*//////////////////////////////////////////////////////////////////////////////////////////////
+        Intent data = new Intent(this, MainPage.class);
+        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+        GoogleSignInAccount acct = result.getSignInAccount();
+        String user_name = acct.getEmail();
 
+        Context context = getApplicationContext();
 
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, user_name, duration);
+        toast.show();
+////////////////////////////////////////////////////////////*/
     }
 
     public void toNuevaKedada(View view){
 
-        //Intent intent = new Intent(this, FirebaseTest.class);
-        //startActivity(intent);
-        addSomeTestKDDS();
+        Intent intent = new Intent(this, NuevaKedada.class);
+        startActivity(intent);
+        //addSomeTestKDDS();
     }
 
     public void masKedadas(View view){
