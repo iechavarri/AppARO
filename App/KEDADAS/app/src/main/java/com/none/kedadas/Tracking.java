@@ -85,6 +85,13 @@ public class Tracking extends AppCompatActivity
         mapFragment.getMapAsync(this);
         buildGoogleApiClient();
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        //mLocation.hasAltitude();
+        /*mLat=(float)mLocation.getLatitude();
+        mLon=(float)mLocation.getLongitude();*/
+        CharSequence localización = "Latitud: "+mLat+" Longitud: "+mLon;
+        Toast toast = Toast.makeText(getBaseContext(),localización,Toast.LENGTH_SHORT);
+        toast.show();
+
     }
 
     @Override
@@ -113,6 +120,11 @@ public class Tracking extends AppCompatActivity
     @Override
     public boolean onMyLocationButtonClick() {
         Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        /*mLat=(float)mLocation.getLatitude();
+        mLon=(float)mLocation.getLongitude();
+        CharSequence localización = "Latitud: "+mLat+" Longitud: "+mLon;
+        Toast toast = Toast.makeText(getBaseContext(),localización,Toast.LENGTH_SHORT);
+        toast.show();*/
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
@@ -176,15 +188,15 @@ public class Tracking extends AppCompatActivity
         // in rare cases when a location is not available.
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
+            /*mLatitudeText.setText(String.format("%s: %f", mLatitudeLabel,
+                    mLastLocation.getLatitude()));
+            mLongitudeText.setText(String.format("%s: %f", mLongitudeLabel,
+                    mLastLocation.getLongitude()));*/
             mLat=(float)mLocation.getLatitude();
             mLon=(float)mLocation.getLongitude();
             CharSequence localización = "Latitud: "+mLat+" Longitud: "+mLon;
             Toast toast = Toast.makeText(getBaseContext(),localización,Toast.LENGTH_SHORT);
             toast.show();
-            /*mLatitudeText.setText(String.format("%s: %f", mLatitudeLabel,
-                    mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.format("%s: %f", mLongitudeLabel,
-                    mLastLocation.getLongitude()));*/
         } else {
             Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();
         }
@@ -199,6 +211,6 @@ public class Tracking extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        
+
     }
 }

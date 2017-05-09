@@ -13,6 +13,10 @@
         No location detected. Make sure location is enabled on the device.
     </string>
 
+    <string name="location_detected">
+        Location detected.
+    </string>
+
     <!--These strings are needed to use the maps an location -->
     <!-- Permissions -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
