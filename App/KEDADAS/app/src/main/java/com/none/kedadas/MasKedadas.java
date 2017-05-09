@@ -15,6 +15,8 @@ import android.widget.TwoLineListItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.*;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,7 @@ public class MasKedadas extends AppCompatActivity {
              */
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
+                Format formatter = new SimpleDateFormat("dd/mm/yyyy");
                 TwoLineListItem twoLineListItem;
                 if (convertView == null){
                     twoLineListItem = (TwoLineListItem) _li.inflate(android.R.layout.simple_list_item_2, null);
@@ -93,12 +96,8 @@ public class MasKedadas extends AppCompatActivity {
                 TextView text1 = twoLineListItem.getText1();
                 TextView text2 = twoLineListItem.getText2();
 
-                text1.setText(item.nombre);
-                text2.setText(item.fecha.toString());
-
-
                 text1.setText(item.getNombre());
-                text2.setText(item.getFecha().toString());
+                text2.setText(formatter.format(item.fecha));
 
                 return twoLineListItem;
             }
