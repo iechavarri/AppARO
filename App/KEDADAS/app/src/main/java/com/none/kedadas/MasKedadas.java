@@ -216,7 +216,7 @@ public class MasKedadas extends AppCompatActivity {
         });
     }
     private void gotoChat(String kdd_name, String kdd_id) {
-        Intent intent = new Intent (this, CreaChat.class);
+        Intent intent = new Intent (this, Chat.class);
         intent.putExtra("kdd_name",kdd_name);
         intent.putExtra("kdd_id",kdd_id);
         startActivity(intent);
