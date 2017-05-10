@@ -55,13 +55,16 @@ public class NuevaKedada extends AppCompatActivity {
 
         DatabaseReference anotherRef;
         anotherRef = myRef.push();
+        kdd1.setId(anotherRef.getKey());
         anotherRef.setValue(kdd1);
+
         anotherRef.child("usrs");
 
-
+        /*
         Intent intent = new Intent (this, CreaChat.class);
         intent.putExtra("kdd_id",kdd1.getId());
         intent.putExtra("kdd_name",kdd1.getNombre());
         startActivity(intent);
+        */
     }
 }
