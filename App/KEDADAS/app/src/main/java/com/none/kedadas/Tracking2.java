@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,ConnectionCallbacks, OnConnectionFailedListener {
+public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
 
@@ -96,6 +97,22 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
         }
     }
 
+    public void updateLocation(Location location){
+
+        mLastLocation = location;
+        //Toast.makeText(this, "Location changed", Toast.LENGTH_LONG).show();
+        if (mLastLocation != null){
+            Toast.makeText(this, R.string.location_changed, Toast.LENGTH_LONG).show();
+            position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+            //TODO send the coordinates to the server
+        }else {
+            Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
@@ -135,5 +152,10 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        updateLocation(location);
     }
 }
