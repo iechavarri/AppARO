@@ -1,12 +1,14 @@
 package com.none.kedadas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import android.widget.TwoLineListItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.*;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,9 +75,7 @@ public class MasKedadas extends AppCompatActivity {
              * parámetro.
              */
             @Override
-            public long getItemId(int position) {
-                return position;
-            }
+            public long getItemId(int position) { return 0;}
 
             /**
              * Este método será invocado cada vez
@@ -82,6 +84,7 @@ public class MasKedadas extends AppCompatActivity {
              */
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
+                Format formatter = new SimpleDateFormat("dd/mm/yyyy");
                 TwoLineListItem twoLineListItem;
                 if (convertView == null){
                     twoLineListItem = (TwoLineListItem) _li.inflate(android.R.layout.simple_list_item_2, null);
@@ -93,12 +96,8 @@ public class MasKedadas extends AppCompatActivity {
                 TextView text1 = twoLineListItem.getText1();
                 TextView text2 = twoLineListItem.getText2();
 
-                text1.setText(item.nombre);
-                text2.setText(item.fecha.toString());
-
-
                 text1.setText(item.getNombre());
-                text2.setText(item.getFecha().toString());
+                text2.setText(formatter.format(item.fecha));
 
                 return twoLineListItem;
             }
@@ -187,16 +186,18 @@ public class MasKedadas extends AppCompatActivity {
 
             }
         });
-
+        */
         // Delete items when clicked
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+            @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                Kedada kdd = (Kedada) listView.getItemAtPosition(position);
+                gotoChat(kdd.getNombre(), kdd.getId());
+                //Query myQuery = myRef.orderByValue().equalTo((String)
+                 //       listView.getItemAtPosition(position));
 
-                Query myQuery = myRef.orderByValue().equalTo((String)
-                        listView.getItemAtPosition(position));
-
+                /*
                 myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -210,9 +211,15 @@ public class MasKedadas extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+                */
             }
         });
-        */
+    }
+    private void gotoChat(String kdd_name, String kdd_id) {
+        Intent intent = new Intent (this, Chat.class);
+        intent.putExtra("kdd_name",kdd_name);
+        intent.putExtra("kdd_id",kdd_id);
+        startActivity(intent);
     }
 
 }
