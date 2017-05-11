@@ -68,10 +68,12 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        /*mMap.addMarker(new MarkerOptions().position(position).title("Marker in Sydney"));
+        /*mMap.addMarker(new MarkerOptions().position(position).title("Marker in mi posicion"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));*/
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap
+
     }
 
     /**
@@ -86,12 +88,14 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         Toast.makeText(this, "Looking for location", Toast.LENGTH_LONG).show();
         if (mLastLocation != null) {
-            Toast.makeText(this, R.string.location_detected, Toast.LENGTH_LONG).show();
             position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            Toast.makeText(this, R.string.location_detected, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+            mMap.addMarker(new MarkerOptions().position(position).title("My fucking position"));
             mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
             //TODO send the coordinates to the server
+            //Crear un arraylist de localizacion y definir su tamaño cuando reciba la primera oleada de localizaciones
         } else {
             Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();
         }
@@ -102,8 +106,9 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
         mLastLocation = location;
         //Toast.makeText(this, "Location changed", Toast.LENGTH_LONG).show();
         if (mLastLocation != null){
-            Toast.makeText(this, R.string.location_changed, Toast.LENGTH_LONG).show();
             position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+            Toast.makeText(this, R.string.location_changed, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
             mMap.addMarker(new MarkerOptions().position(position).title("My position"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
@@ -156,6 +161,8 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
 
     @Override
     public void onLocationChanged(Location location) {
+
         updateLocation(location);
+
     }
 }
