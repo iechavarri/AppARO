@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -76,7 +77,13 @@ public class NuevaKedada extends AppCompatActivity {
         //TODO Creating deeplink for the new kedada
 
         //In this section the new link will be created
-        String url = new String("https://yhj7b.app.goo.gl/");
+        String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
+        //"https://domain/?link=your_deep_link&apn=package_name[&amv=minimum_version][&ad=1][&al=android_link][&afl=fallback_link]"
+        Log.d("LINKGORRINO",url);
+        
+
+
+
 
 
         //anotherRef.child().setValue(email);
