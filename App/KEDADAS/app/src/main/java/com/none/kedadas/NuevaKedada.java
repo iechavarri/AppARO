@@ -80,7 +80,7 @@ public class NuevaKedada extends AppCompatActivity {
         String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
         //"https://domain/?link=your_deep_link&apn=package_name[&amv=minimum_version][&ad=1][&al=android_link][&afl=fallback_link]"
         Log.d("LINKGORRINO",url);
-        
+
 
 
 
