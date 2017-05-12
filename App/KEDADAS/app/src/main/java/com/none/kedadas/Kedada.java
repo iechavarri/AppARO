@@ -3,6 +3,7 @@ package com.none.kedadas;
 import com.google.firebase.database.IgnoreExtraProperties;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,12 +15,52 @@ public class Kedada {
     String id;
     String nombre;
     Date fecha;
+
+    public static class Users{
+        String userId;
+        String userEmail;
+        String latitud;
+        String longitud;
+
+        /**
+         * Se que esto es una marranada. Pero es para agilizar desarrollo y organizar un poquito esto para
+         * que sea mas facil seguir el trazado de las cosas debugeando
+         */
+        public Users(){
+            this.userId = null;
+            this.userEmail = null;
+            this.latitud = null;
+            this.longitud = null;
+        }
+        public Users(String userId,String userEmail, String latitud, String longitud) {
+            this.userId = userId;
+            this.userEmail = userEmail;
+            this.latitud = latitud;
+            this.longitud = longitud;
+        }
+
+        public void setUserId(String userId){
+            this.userId = userId;
+        }
+
+        //TODO getters and setters;
+    }
+
+
+
+
+    ArrayList<Users> users = new ArrayList<>();
     public Kedada() {
         // needed for firebase
     }
-    public Kedada(String nombre, Date fecha) {
+    public Kedada(String nombre, Date fecha, Users user) {
         this.nombre = nombre;
         this.fecha = fecha;
+        this.users.add(user);
+    }
+
+    public void AddUser(Users user) {
+        this.users.add(user);
     }
     public Kedada(String id, String nombre, Date fecha) {
         this.id = id;

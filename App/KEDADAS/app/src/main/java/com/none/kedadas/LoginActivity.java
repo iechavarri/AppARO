@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Start loading the ad in the background.
         mAdView.loadAd(adRequest);
 
-        //TODO Something about google login...
+
         //sign in object to request the email
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //THIS CAN BE AN ERROR!!!
@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     // TODO Hacer lo que se necesite hacer cuando logeamos.
                     Toast.makeText(getApplicationContext(), "AUTHENTICATED", Toast.LENGTH_LONG).show();
                     goToMainPage();
+                    finish();
 
                 }
             }

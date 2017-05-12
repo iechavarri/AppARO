@@ -1,8 +1,10 @@
 package com.none.kedadas;
 
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,9 +22,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.MapStyleOptions;
 
 
-public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
+public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
 
@@ -70,9 +73,9 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
         LatLng sydney = new LatLng(-34, 151);
         /*mMap.addMarker(new MarkerOptions().position(position).title("Marker in mi posicion"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));*/
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("My position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
     }
 
@@ -85,15 +88,25 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback,Co
         // applications that do not require a fine-grained location and that do not need location
         // updates. Gets the best and most recent location currently available, which may be null
         // in rare cases when a location is not available.
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         Toast.makeText(this, "Looking for location", Toast.LENGTH_LONG).show();
         if (mLastLocation != null) {
             position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             Toast.makeText(this, R.string.location_detected, Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
+            mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            mMap.moveCamera(CameraUpdateFactory.zoomBy(1));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
-            mMap.addMarker(new MarkerOptions().position(position).title("My fucking position"));
-            mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
             //TODO send the coordinates to the server
             //Crear un arraylist de localizacion y definir su tamaño cuando reciba la primera oleada de localizaciones
         } else {
