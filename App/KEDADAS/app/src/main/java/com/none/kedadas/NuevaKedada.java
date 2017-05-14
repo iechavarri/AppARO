@@ -34,6 +34,7 @@ public class NuevaKedada extends AppCompatActivity {
     private TextView tvDisplayDate;
     private DatePicker dpResult;
     private Button btnChangeDate;
+      DateFormat dateFormatter;
 
     private int year;
     private int month;
@@ -49,7 +50,7 @@ public class NuevaKedada extends AppCompatActivity {
         setCurrentDateOnView();
         addListenerOnButton();
 
-
+        dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
     }
 
     // display current date
@@ -63,12 +64,13 @@ public class NuevaKedada extends AppCompatActivity {
         day = c.get(Calendar.DAY_OF_MONTH);
 
         // set current date into textview
-        tvDisplayDate.setText(new StringBuilder()
+        tvDisplayDate.setText(
+                dateFormatter.format(c)
+                /*new StringBuilder()
                 // Month is 0 based, just add 1
                 .append(day).append("/").append(month+1).append("/")
-                .append(year).append(" "));
-
-
+                .append(year).append(" ")
+                */);
     }
     public void addListenerOnButton() {
 
@@ -166,7 +168,7 @@ public class NuevaKedada extends AppCompatActivity {
             //userGroup = new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
 
         }
-        Kedada kdd1 = new Kedada(kddname,dateFormatter.parse(kdddate),userToAdd);
+        Kedada kdd1 = new Kedada(kddname, formatter/*dateFormatter.parse(kdddate)*/,userToAdd);
         kdd1.AddUser(new Kedada.Users("This is a fucking id","AndThisAnd@email.com","12.2","12.2"));
         DatabaseReference anotherRef;
         anotherRef = myRef.push();
