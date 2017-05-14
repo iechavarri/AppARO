@@ -181,7 +181,9 @@ public class NuevaKedada extends AppCompatActivity {
         //In this section the new link will be created
         //https://yhj7b.app.goo.gl/?link=https://yhj7b.app.goo.gl/&apn=com.none.kedadas&afl=http://52.43.198.218
         //String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
-        String url = new String("https://yhj7b.app.goo.gl/?link=https://yhj7b.app.goo.gl/&apn=com.none.kedadas&afl=http://52.43.198.218");
+        String url = new String("https://yhj7b.app.goo.gl/?link="+
+                "https://yhj7b.app.goo.gl/?KedadaKey="+anotherRef.getKey()+"&apn="+"" +
+                "com.none.kedadas&afl=http://52.43.198.218");
         //This is going to be autocopied to clipboard
         ClipData clip = ClipData.newPlainText(url,url);
         ClipboardManager clipboard = (ClipboardManager)this.getSystemService(CLIPBOARD_SERVICE);

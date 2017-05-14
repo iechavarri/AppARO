@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TwoLineListItem;
 
 import com.google.android.gms.appinvite.AppInvite;
@@ -21,9 +22,13 @@ import com.google.android.gms.appinvite.AppInviteReferral;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,11 +40,16 @@ import java.util.List;
 
 public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+
+    Kedada.Users userToAdd;
+    ArrayList<Kedada.Users> paDentro = new ArrayList<Kedada.Users>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otras_kedadas);
 
+
+        final URL[] urlKedada = new URL[1];
         GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(AppInvite.API)
@@ -55,9 +65,31 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     // Extract deep link from Intent
                                     Intent intent = result.getInvitationIntent();
                                     String deepLink = AppInviteReferral.getDeepLink(intent);
-
+                                    //String invitation = AppInviteReferral.getInvitationId(intent);
 
                                     Log.d("TENEMOS UNO!!", deepLink);
+
+                                    String[] trozos = deepLink.split("KedadaKey=");
+                                    String kedadaKey=trozos[1];
+                                    Toast.makeText(getApplicationContext(), kedadaKey, Toast.LENGTH_LONG).show();
+
+                                    //Añadiendo el usuario a la kedada
+                                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if (user != null) {
+                                        //TODO AQUI HAY QUE METER LA PUTA MIERDA DEL USUARIO DE LOS COJONES
+                                        //ESTOY HASTA LA POLLAR
+
+
+                                    }
+
+
+                                    FirebaseDatabase getKedadaForNewUser = FirebaseDatabase.getInstance();
+                                    DatabaseReference referenceForNewUSer = getKedadaForNewUser.getReference("kedadas-7a35e");
+                                    DatabaseReference usRef= referenceForNewUSer.child(kedadaKey).getRef();
+
+
+
                                     // Handle the deep link. For example, open the linked
                                     // content, or apply promotional credit to the user's
                                     // account.
@@ -255,9 +287,9 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
         });
     }
     private void gotoChat(String kdd_name, String kdd_id) {
-        Intent intent = new Intent (this, Chat.class);
-        intent.putExtra("kdd_name",kdd_name);
-        intent.putExtra("kdd_id",kdd_id);
+        Intent intent = new Intent(this, Chat.class);
+        intent.putExtra("kdd_name", kdd_name);
+        intent.putExtra("kdd_id", kdd_id);
         startActivity(intent);
     }
 
