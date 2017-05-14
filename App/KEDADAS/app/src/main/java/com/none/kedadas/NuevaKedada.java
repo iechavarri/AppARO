@@ -34,11 +34,8 @@ public class NuevaKedada extends AppCompatActivity {
     private TextView tvDisplayDate;
     private DatePicker dpResult;
     private Button btnChangeDate;
-      DateFormat dateFormatter;
-
-    private int year;
-    private int month;
-    private int day;
+    private DateFormat dateFormatter;
+    private Calendar c;
 
     static final int DATE_DIALOG_ID = 999;
 
@@ -46,11 +43,10 @@ public class NuevaKedada extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_kedada);
-
+        c = Calendar.getInstance();
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         setCurrentDateOnView();
         addListenerOnButton();
-
-        dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
     }
 
     // display current date
@@ -58,14 +54,9 @@ public class NuevaKedada extends AppCompatActivity {
 
         tvDisplayDate = (TextView) findViewById(R.id.tvDate);
 
-        final Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
-
         // set current date into textview
         tvDisplayDate.setText(
-                dateFormatter.format(c)
+                dateFormatter.format(c.getTime())
                 /*new StringBuilder()
                 // Month is 0 based, just add 1
                 .append(day).append("/").append(month+1).append("/")
@@ -95,7 +86,7 @@ public class NuevaKedada extends AppCompatActivity {
             case DATE_DIALOG_ID:
                 // set date picker as current date
                 return new DatePickerDialog(this, datePickerListener,
-                        year, month,day);
+                        c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
         }
         return null;
     }
@@ -106,14 +97,12 @@ public class NuevaKedada extends AppCompatActivity {
         // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
+            c.set(Calendar.YEAR, selectedYear);
+            c.set(Calendar.MONTH, selectedMonth);
+            c.set(Calendar.DAY_OF_MONTH, selectedDay);
 
             // set selected date into textview
-            tvDisplayDate.setText(new StringBuilder().append(day)
-                    .append("/").append(month + 1).append("/").append(year)
-                    .append(""));
+            tvDisplayDate.setText(dateFormatter.format(c.getTime()));
 
             // set selected date into datepicker also
             //dpResult.init(year, month, day, null);
@@ -125,8 +114,6 @@ public class NuevaKedada extends AppCompatActivity {
 
 
     public void crearChat(View view) throws ParseException {
-
-        DateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds");
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         Kedada.Users userToAdd = new Kedada.Users();
@@ -168,7 +155,7 @@ public class NuevaKedada extends AppCompatActivity {
             //userGroup = new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
 
         }
-        Kedada kdd1 = new Kedada(kddname, formatter/*dateFormatter.parse(kdddate)*/,userToAdd);
+        Kedada kdd1 = new Kedada(kddname, c.getTime()/*dateFormatter.parse(kdddate)*/,userToAdd);
         kdd1.AddUser(new Kedada.Users("This is a fucking id","AndThisAnd@email.com","12.2","12.2"));
         DatabaseReference anotherRef;
         anotherRef = myRef.push();
