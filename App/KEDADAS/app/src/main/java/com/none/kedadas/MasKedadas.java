@@ -155,7 +155,7 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
              */
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                Format formatter = new SimpleDateFormat("dd/mm/yyyy");
+                Format formatter = new SimpleDateFormat("dd/MM/yyyy");
                 TwoLineListItem twoLineListItem;
                 if (convertView == null){
                     twoLineListItem = (TwoLineListItem) _li.inflate(android.R.layout.simple_list_item_2, null);

@@ -121,7 +121,7 @@ public class MainPage extends AppCompatActivity{
         super.onDestroy();
     }
     private void addSomeTestKDDS() {
-        DateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds");
         Kedada kdd1 = null, kdd2 = null;
         try {
