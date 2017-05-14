@@ -26,6 +26,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+
+    <Button
+        android:id="@+id/btnChangeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Date" />
+
     <TextView
         android:id="@+id/textViewFecha"
         android:layout_width="match_parent"
@@ -33,20 +40,25 @@
         android:text="Fecha KDD"
         android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/add_kdddate_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Date (DD-MM-YYYY): "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     <Button
         android:id="@+id/add_kdd_next1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Siguiente"
         android:onClick="crearChat"/>
-
 
 </LinearLayout>
