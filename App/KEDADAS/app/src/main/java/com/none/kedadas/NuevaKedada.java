@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +35,11 @@ public class NuevaKedada extends AppCompatActivity {
 
         DateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds");
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        Kedada.Users userToAdd = new Kedada.Users();
 
+        String email = new String();
+        String userid = new String();
 
         //Read KDD name
         EditText kddname_edit = (EditText) findViewById(R.id.add_kddname_edittext);
@@ -51,15 +58,35 @@ public class NuevaKedada extends AppCompatActivity {
             return;
         }
 
-        Kedada kdd1 = new Kedada(kddname,dateFormatter.parse(kdddate));
+        //This is for take the actual user data
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            userToAdd= new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
 
+            //userGroup = new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
+
+        }
+        Kedada kdd1 = new Kedada(kddname,dateFormatter.parse(kdddate),userToAdd);
+        kdd1.AddUser(new Kedada.Users("This is a fucking id","AndThisAnd@email.com","12.2","12.2"));
         DatabaseReference anotherRef;
         anotherRef = myRef.push();
         kdd1.setId(anotherRef.getKey());
         anotherRef.setValue(kdd1);
+        anotherRef.child("users").push().getKey();
 
-        anotherRef.child("usrs");
+        //TODO Creating deeplink for the new kedada
 
+        //In this section the new link will be created
+        String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
+        //"https://domain/?link=your_deep_link&apn=package_name[&amv=minimum_version][&ad=1][&al=android_link][&afl=fallback_link]"
+        Log.d("LINKGORRINO",url);
+
+
+
+
+
+
+        //anotherRef.child().setValue(email);
         /*
         Intent intent = new Intent (this, CreaChat.class);
         intent.putExtra("kdd_id",kdd1.getId());

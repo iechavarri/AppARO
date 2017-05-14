@@ -3,6 +3,7 @@ package com.none.kedadas;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
+import com.google.android.gms.appinvite.AppInvite;
+import com.google.android.gms.appinvite.AppInviteInvitationResult;
+import com.google.android.gms.appinvite.AppInviteReferral;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.*;
 
@@ -26,12 +33,44 @@ import java.util.List;
  * Created by diego on 23/03/2017.
  */
 
-public class MasKedadas extends AppCompatActivity {
+public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otras_kedadas);
+
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(AppInvite.API)
+                .build();
+
+        boolean autoLaunchDeepLink = false;
+        AppInvite.AppInviteApi.getInvitation(mGoogleApiClient, this, autoLaunchDeepLink)
+                .setResultCallback(
+                        new ResultCallback<AppInviteInvitationResult>() {
+                            @Override
+                            public void onResult(@NonNull AppInviteInvitationResult result) {
+                                if (result.getStatus().isSuccess()) {
+                                    // Extract deep link from Intent
+                                    Intent intent = result.getInvitationIntent();
+                                    String deepLink = AppInviteReferral.getDeepLink(intent);
+
+
+                                    Log.d("TENEMOS UNO!!", deepLink);
+                                    // Handle the deep link. For example, open the linked
+                                    // content, or apply promotional credit to the user's
+                                    // account.
+
+                                    // ...
+                                } else {
+                                    Log.d("Y EL LINK???", "getInvitation: no deep link found.");
+                                }
+                            }
+                        });
+
+
+
 
         // Get ListView object from xml
         final ListView listView = (ListView) findViewById(R.id.ActiveKDD);
@@ -222,4 +261,8 @@ public class MasKedadas extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }

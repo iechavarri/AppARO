@@ -125,8 +125,8 @@ public class MainPage extends AppCompatActivity{
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds");
         Kedada kdd1 = null, kdd2 = null;
         try {
-            kdd1 = new Kedada("Primera kdd", dateFormatter.parse("05/05/2017"));
-            kdd2 = new Kedada("Segunda kdd", dateFormatter.parse("06/05/2017"));
+            kdd1 = new Kedada("Primera kdd", dateFormatter.parse("05/05/2017"), new Kedada.Users());
+            kdd2 = new Kedada("Segunda kdd", dateFormatter.parse("06/05/2017"), new Kedada.Users());
         } catch (ParseException e) {
             e.printStackTrace();
         }
