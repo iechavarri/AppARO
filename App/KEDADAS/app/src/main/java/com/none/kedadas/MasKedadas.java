@@ -82,6 +82,8 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                         userToAdd.setLatitud("56.45");
                                         userToAdd.setLongitud("43.23");
                                         myRef.child(uid).setValue(userToAdd);
+                                        // añadir la kdd al usuario
+                                        FirebaseDatabase.getInstance().getReference("users" + "/" + uid + "/" + "kdds" + "/" + kedadaKey).setValue(true);
                                     }
 
                                     FirebaseDatabase getKedadaForNewUser = FirebaseDatabase.getInstance();
