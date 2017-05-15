@@ -155,7 +155,7 @@ public class NuevaKedada extends AppCompatActivity {
             //userGroup = new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
 
         }
-        Kedada kdd1 = new Kedada(kddname, c.getTime()/*dateFormatter.parse(kdddate)*/,userToAdd);
+        Kedada kdd1 = new Kedada(kddname, c.getTime(),userToAdd);
         kdd1.AddUser(new Kedada.Users("This is a fucking id","AndThisAnd@email.com","12.2","12.2"));
         DatabaseReference anotherRef;
         anotherRef = myRef.push();
