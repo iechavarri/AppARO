@@ -39,11 +39,40 @@ public class Kedada {
             this.longitud = longitud;
         }
 
-        public void setUserId(String userId){
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getUserEmail() {
+            return userEmail;
+        }
+
+        public String getLatitud() {
+            return latitud;
+        }
+
+        public String getLongitud() {
+            return longitud;
+        }
+
+        public void setUserId(String userId) {
             this.userId = userId;
         }
 
-        //TODO getters and setters;
+        public void setUserEmail(String userEmail) {
+            this.userEmail = userEmail;
+        }
+
+        public void setLatitud(String latitud) {
+            this.latitud = latitud;
+        }
+
+        public void setLongitud(String longitud) {
+            this.longitud = longitud;
+        }
+
+
+//TODO getters and setters;
     }
 
 
