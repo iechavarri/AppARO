@@ -70,7 +70,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+        LatLng sydney = new LatLng(42.123241, -1.938423);
         /*mMap.addMarker(new MarkerOptions().position(position).title("Marker in mi posicion"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));*/
         mMap.addMarker(new MarkerOptions().position(sydney).title("My position"));

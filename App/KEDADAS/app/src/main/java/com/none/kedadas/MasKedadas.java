@@ -41,7 +41,7 @@ import java.util.List;
 public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
 
-    Kedada.Users userToAdd;
+    public Kedada.Users userToAdd = new Kedada.Users("email","id","45","45");
     ArrayList<Kedada.Users> paDentro = new ArrayList<Kedada.Users>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,15 +78,28 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     if (user != null) {
                                         //TODO AQUI HAY QUE METER LA PUTA MIERDA DEL USUARIO DE LOS COJONES
-                                        //ESTOY HASTA LA POLLAR
+                                        //ESTOY HASTA LA POLLA
+                                        userToAdd.setUserEmail(user.getEmail());
+                                        userToAdd.setUserId(user.getUid());
+
+                                        //TODO: METER LA LOCALIZACION ACTUAL. AHORA ESTA HARDCODEADA UNA
+                                        userToAdd.setLatitud("56.45");
+                                        userToAdd.setLongitud("43.23");
+                                        paDentro.add(userToAdd);
 
 
                                     }
 
-
                                     FirebaseDatabase getKedadaForNewUser = FirebaseDatabase.getInstance();
                                     DatabaseReference referenceForNewUSer = getKedadaForNewUser.getReference("kedadas-7a35e");
-                                    DatabaseReference usRef= referenceForNewUSer.child(kedadaKey).getRef();
+                                    DatabaseReference usRef= referenceForNewUSer.child("kdds").child(kedadaKey).getRef().child("users");
+
+                                
+                                    //Log.d("QUE MIERDA",queEs);
+
+
+
+
 
 
 
