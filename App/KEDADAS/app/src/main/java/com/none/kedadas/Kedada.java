@@ -1,5 +1,6 @@
 package com.none.kedadas;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -77,7 +78,7 @@ public class Kedada {
 
 
 
-
+    @Exclude
     ArrayList<Users> users = new ArrayList<>();
     public Kedada() {
         // needed for firebase
