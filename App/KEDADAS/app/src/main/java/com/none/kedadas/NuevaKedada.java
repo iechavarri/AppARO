@@ -150,50 +150,33 @@ public class NuevaKedada extends AppCompatActivity {
         //This is for take the actual user data
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            userToAdd= new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
+            // crear la kdd
+            Kedada kdd = new Kedada(kddname, c.getTime(),userToAdd);
+            String kddId = myRef.push().getKey();
+            String uid = user.getUid();
+            kdd.setId(kddId);
+            myRef.child(kddId).setValue(kdd);
+            // introducir el administrador de la kdd
+            myRef.child(kddId).child("admin").setValue(uid);
+            // actualizar en el nodo de usuario
+            FirebaseDatabase.getInstance().getReference("users" + "/" + uid + "/" + "kdds" + "/" + kddId).setValue(true);
 
-            //userGroup = new Kedada.Users(user.getUid(),user.getEmail(),"42.3","42.3");
 
+            //TODO Creating deeplink for the new kedada
+
+            //In this section the new link will be created
+            //https://yhj7b.app.goo.gl/?link=https://yhj7b.app.goo.gl/&apn=com.none.kedadas&afl=http://52.43.198.218
+            //String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
+            String url = new String("https://yhj7b.app.goo.gl/?link="+
+                    "https://yhj7b.app.goo.gl/?KedadaKey="+kddId+"&apn="+"" +
+                    "com.none.kedadas&afl=http://52.43.198.218");
+            //This is going to be autocopied to clipboard
+            ClipData clip = ClipData.newPlainText(url,url);
+            ClipboardManager clipboard = (ClipboardManager)this.getSystemService(CLIPBOARD_SERVICE);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(getApplicationContext(), "URL copiada al portapapeles", Toast.LENGTH_LONG).show();
+            Log.d("LINKGORRINO",url);
         }
-        Kedada kdd1 = new Kedada(kddname, c.getTime(),userToAdd);
-        kdd1.AddUser(new Kedada.Users("This is a fucking id","AndThisAnd@email.com","12.2","12.2"));
-        DatabaseReference anotherRef;
-        anotherRef = myRef.push();
-        kdd1.setId(anotherRef.getKey());
-        anotherRef.setValue(kdd1);
-        anotherRef.child("users").push().getKey();
-
-        //TODO Creating deeplink for the new kedada
-
-        //In this section the new link will be created
-        //https://yhj7b.app.goo.gl/?link=https://yhj7b.app.goo.gl/&apn=com.none.kedadas&afl=http://52.43.198.218
-        //String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
-        String url = new String("https://yhj7b.app.goo.gl/?link="+
-                "https://yhj7b.app.goo.gl/?KedadaKey="+anotherRef.getKey()+"&apn="+"" +
-                "com.none.kedadas&afl=http://52.43.198.218");
-        //This is going to be autocopied to clipboard
-        ClipData clip = ClipData.newPlainText(url,url);
-        ClipboardManager clipboard = (ClipboardManager)this.getSystemService(CLIPBOARD_SERVICE);
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(getApplicationContext(), "URL copiada al portapapeles", Toast.LENGTH_LONG).show();
-
-
-
-        //"https://domain/?link=your_deep_link&apn=package_name[&amv=minimum_version][&ad=1][&al=android_link][&afl=fallback_link]"
-        Log.d("LINKGORRINO",url);
-
-
-
-
-
-
-        //anotherRef.child().setValue(email);
-        /*
-        Intent intent = new Intent (this, CreaChat.class);
-        intent.putExtra("kdd_id",kdd1.getId());
-        intent.putExtra("kdd_name",kdd1.getNombre());
-        startActivity(intent);
-        */
     }
 
 }
