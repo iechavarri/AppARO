@@ -70,13 +70,19 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(42.123241, -1.938423);
-        /*mMap.addMarker(new MarkerOptions().position(position).title("Marker in mi posicion"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(position));*/
+        /*LatLng sydney = new LatLng(42.123241, -1.938423);
+        mMap.addMarker(new MarkerOptions().position(position).title("Marker in mi posicion"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         mMap.addMarker(new MarkerOptions().position(sydney).title("My position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);*/
+        LatLng pamplona = new LatLng(42.797263,-1.6343405);
+        mMap.addMarker(new MarkerOptions().position(pamplona).title("Marker in mi posicion"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
+        mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
+        mMap.addMarker(new MarkerOptions().position(pamplona).title("My position"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
     }
 
     /**
@@ -105,9 +111,10 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             Toast.makeText(this, R.string.location_detected, Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
             mMap.addMarker(new MarkerOptions().position(position).title("My position"));
-            mMap.moveCamera(CameraUpdateFactory.zoomBy(1));
+            mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
+
             //Crear un arraylist de localizacion y definir su tamaño cuando reciba la primera oleada de localizaciones
         } else {
             Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();

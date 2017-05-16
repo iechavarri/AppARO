@@ -93,12 +93,6 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                 
                                     //Log.d("QUE MIERDA",queEs);
 
-
-
-
-
-
-
                                     // Handle the deep link. For example, open the linked
                                     // content, or apply promotional credit to the user's
                                     // account.
