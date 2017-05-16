@@ -84,7 +84,7 @@ public class MainPage extends AppCompatActivity{
 
     public void toConfiguracion(View view){
 
-        Intent intent = new Intent(this, Tracking2  .class);
+        Intent intent = new Intent(this, Configuracion  .class);
         startActivity(intent);
     }
 
