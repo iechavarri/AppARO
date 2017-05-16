@@ -213,11 +213,12 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
         listView.setAdapter(adapter);
 
         // Connect to the Firebase database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        // Get a reference to the todoItems child items it the database
-        final DatabaseReference myRef = database.getReference("kdds");
-
+        // reference for user kdds
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final DatabaseReference myRef = database.getReference("users/"+uid+"/kdds");
+        Log.d("user id", uid);
 
         // Assign a listener to detect changes to the child items
         // of the database reference.
@@ -228,9 +229,23 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
             // each time a new child is added.
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Kedada kdd = dataSnapshot.getValue(Kedada.class);
-                // filter kdd and only add it if it's active
-                adapter.add(kdd);
+                String kddId = dataSnapshot.getKey();
+                Log.d("kddId", kddId);
+                // assign listener for changes on each kdd
+                database.getReference("kdds/" + kddId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Kedada kdd = (Kedada) dataSnapshot.getValue(Kedada.class);
+                        adapter.add(kdd);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // if something goes wrong...
+                    }
+                    }
+
+                );
             }
 
             // This function is called each time a child item is removed.
