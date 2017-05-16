@@ -32,6 +32,7 @@ import java.net.URL;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,6 +40,16 @@ import java.util.List;
  */
 
 public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+    ArrayList<String> kddsUser = new ArrayList<String>();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = firebaseAuth.getCurrentUser();
+
+
+    public class UserInKDD {
+        String KDD;
+        String value;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +81,8 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     Toast.makeText(getApplicationContext(), kedadaKey, Toast.LENGTH_LONG).show();
 
                                     //Añadiendo el usuario a la kedada
-                                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    //FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                    //FirebaseUser user = firebaseAuth.getCurrentUser();
                                     if (user != null) {
                                         Kedada.Users userToAdd = new Kedada.Users();
                                         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds" + "/" + kedadaKey + "/" + "users");
@@ -89,6 +100,7 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     FirebaseDatabase getKedadaForNewUser = FirebaseDatabase.getInstance();
                                     DatabaseReference referenceForNewUSer = getKedadaForNewUser.getReference("kedadas-7a35e");
                                     DatabaseReference usRef= referenceForNewUSer.child("kdds").child(kedadaKey).getRef().child("users");
+<<<<<<< HEAD
 
                                 
                                     //Log.d("QUE MIERDA",queEs);
@@ -99,6 +111,9 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
 
                                     // ...
                                 } else {
+=======
+                   } else {
+>>>>>>> 636e816cdf770e864f8b81f1929348c5a85c7519
                                     Log.d("Y EL LINK???", "getInvitation: no deep link found.");
                                 }
                             }
@@ -224,8 +239,14 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Kedada kdd = dataSnapshot.getValue(Kedada.class);
                 // filter kdd and only add it if it's active
-                adapter.add(kdd);
+                // TODO: Show only Kedadas that you belong
+                ArrayList<String> estasKedadas = inKdd();
+                if( estasKedadas.contains(kdd.getId()) ) {
+                    adapter.add(kdd);
+                }
             }
+
+
 
             // This function is called each time a child item is removed.
             public void onChildRemoved(DataSnapshot dataSnapshot) {}/*{
@@ -295,6 +316,37 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
         intent.putExtra("kdd_id", kdd_id);
         startActivity(intent);
     }
+
+    public ArrayList<String> inKdd() {
+
+        FirebaseDatabase getUsersInKedadas = FirebaseDatabase.getInstance();
+        final DatabaseReference refForUserKdds = getUsersInKedadas.getReference("users");
+        //DatabaseReference kddsDeUser = referenceForNewUSer.child("users").child(user.getUid()).child("kdds").getRef();
+        Log.d("MIERDA",refForUserKdds.toString());
+        refForUserKdds.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //TODO conseguir recuperar los datos de las kedadas a las que estan apuntados los usuarios
+                //no consigo como coño leerlos
+
+                String value = dataSnapshot.getValue().toString();
+                Log.d("This sucks",value);
+
+                //{kdds={-KkFHRwT0cmv2SZ7PPc4=true, -KkF3rRdyp5VhQ7QIoLC=true}}
+
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });  ;
+        return kddsUser;
+
+        //child("users").child(user.getUid());
+    }
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
