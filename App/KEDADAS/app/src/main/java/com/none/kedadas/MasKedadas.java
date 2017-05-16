@@ -100,9 +100,7 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     FirebaseDatabase getKedadaForNewUser = FirebaseDatabase.getInstance();
                                     DatabaseReference referenceForNewUSer = getKedadaForNewUser.getReference("kedadas-7a35e");
                                     DatabaseReference usRef= referenceForNewUSer.child("kdds").child(kedadaKey).getRef().child("users");
-<<<<<<< HEAD
 
-                                
                                     //Log.d("QUE MIERDA",queEs);
 
                                     // Handle the deep link. For example, open the linked
@@ -110,10 +108,9 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     // account.
 
                                     // ...
-                                } else {
-=======
+
+
                    } else {
->>>>>>> 636e816cdf770e864f8b81f1929348c5a85c7519
                                     Log.d("Y EL LINK???", "getInvitation: no deep link found.");
                                 }
                             }

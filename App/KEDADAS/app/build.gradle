@@ -6,11 +6,8 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
             storePassword 'android'
-<<<<<<< HEAD
-            storeFile file('C:/Users/diego/.android/debug.keystore')
-=======
             storeFile file('C:/Users/iecha/.android/debug.keystore')
->>>>>>> 636e816cdf770e864f8b81f1929348c5a85c7519
+
         }
     }
     compileSdkVersion 23
