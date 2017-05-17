@@ -8,6 +8,12 @@ android {
             storePassword 'android'
             storeFile file('C:/Users/iecha/.android/debug.keystore')
         }
+        config1 {
+            keyAlias 'KedadasKey'
+            keyPassword 'appkedadas'
+            storeFile file('C:/Users/iecha/.android/debug.keystore')
+            storePassword 'android'
+        }
     }
 
     dexOptions {
@@ -27,6 +33,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config1
         }
         debug {
             signingConfig signingConfigs.config
