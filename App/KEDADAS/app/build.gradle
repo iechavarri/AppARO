@@ -59,5 +59,6 @@ dependencies {
     //Firebase crash reports
     compile 'com.google.firebase:firebase-crash:10.2.1'
     compile 'com.google.android.gms:play-services-auth:10.2.1'
+    compile 'com.google.android.gms:play-services-analytics:9.2.0'
 }
 apply plugin: 'com.google.gms.google-services'
