@@ -23,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -73,6 +74,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
                 double theLat = Double.parseDouble(user.getLatitud());
                 double theLon = Double.parseDouble(user.getLongitud());
                 markers.add(new MarkerOptions().position(new LatLng(theLat,theLon)).title(user.getUserId()));
+                refreshMap();
             }
 
             @Override
@@ -88,8 +90,10 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
                 if (usuarios.get(i).getUserId().equals(toFind)){
                     double theLat = Double.parseDouble(usuarios.get(i).getLatitud());
                     double theLon = Double.parseDouble(usuarios.get(i).getLongitud());
-                    markers.get(i).position(new LatLng(theLat,theLon)).title(usuarios.get(i).getUserId());
+                    markers.get(i).position(new LatLng(theLat,theLon));
+                            //.title(usuarios.get(i).getUserId());
                 }
+                refreshMap();
             }
 
             @Override
@@ -178,6 +182,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             Toast.makeText(this, R.string.location_detected, Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
+            updateLocation(mLastLocation);
             //mMap.addMarker(new MarkerOptions().position(position).title("My position"));
             //mMap.clear();
             for (MarkerOptions marcador : markers){
@@ -203,15 +208,30 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
             //mMap.addMarker(new MarkerOptions().position(position).title("My position"));
             //mMap.clear();
-            for (MarkerOptions marcador : markers){
-                mMap.addMarker(marcador);
-            }
+            //for (MarkerOptions marcador : markers){
+            //    mMap.addMarker(marcador);
+            //}
+
+            HashMap h = new HashMap<String,String>();
+            h.put("latitud", Double.toString(position.latitude));
+            h.put("longitud", Double.toString(position.longitude));
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds/"+kdd+"/users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+            myRef.updateChildren(h);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
         }else {
             Toast.makeText(this, R.string.no_location_detected, Toast.LENGTH_LONG).show();
         }
 
+    }
+    private void refreshMap() {
+        mMap.clear();
+        LatLng lastpos = position;
+        for (MarkerOptions marcador : markers){
+            mMap.addMarker(marcador);
+            lastpos = marcador.getPosition();
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lastpos));
     }
 
     @Override
