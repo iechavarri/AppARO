@@ -23,6 +23,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
@@ -30,6 +38,12 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
     private GoogleMap mMap;
 
     private LatLng position;
+
+    private String kdd;
+
+    private ArrayList<MarkerOptions> markers = new ArrayList<>();
+
+    private ArrayList<Kedada.Users> usuarios = new ArrayList<>();
 
     protected static final String TAG = "MainActivity";
 
@@ -47,6 +61,53 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_location_demo);
+
+        kdd = getIntent().getExtras().get("kedada").toString();
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds/"+kdd+"/users");
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Kedada.Users user = (Kedada.Users) dataSnapshot.getValue(Kedada.Users.class);
+                usuarios.add(user);
+                double theLat = Double.parseDouble(user.getLatitud());
+                double theLon = Double.parseDouble(user.getLongitud());
+                markers.add(new MarkerOptions().position(new LatLng(theLat,theLon)).title(user.getUserId()));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Kedada.Users user = (Kedada.Users) dataSnapshot.getValue(Kedada.Users.class);
+                String toFind = user.getUserId();
+                int i;
+                for (i = 0; i<usuarios.size();i++){
+                    if (usuarios.get(i).getUserId().equals(toFind)){
+                        break;
+                    }
+                }
+                if (usuarios.get(i).getUserId().equals(toFind)){
+                    double theLat = Double.parseDouble(usuarios.get(i).getLatitud());
+                    double theLon = Double.parseDouble(usuarios.get(i).getLongitud());
+                    markers.get(i).position(new LatLng(theLat,theLon)).title(usuarios.get(i).getUserId());
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("BASURA AQUI","FALLO EN LECTURA");
+            }
+        });
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -76,13 +137,20 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
         mMap.addMarker(new MarkerOptions().position(sydney).title("My position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);*/
-        LatLng pamplona = new LatLng(42.797263,-1.6343405);
-        mMap.addMarker(new MarkerOptions().position(pamplona).title("Marker in mi posicion"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
+        //LatLng pamplona = new LatLng(42.797263,-1.6343405);
+        //mMap.addMarker(new MarkerOptions().position(pamplona).title("Marker in mi posicion"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
         mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
-        mMap.addMarker(new MarkerOptions().position(pamplona).title("My position"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
+
+        //mMap.addMarker(new MarkerOptions().position(pamplona).title("My position"));
+        //mMap.clear();
+        for (MarkerOptions marcador : markers){
+            mMap.addMarker(marcador);
+        }
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        //TODO mandar ubicacion inicial
     }
 
     /**
@@ -110,7 +178,11 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             Toast.makeText(this, R.string.location_detected, Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
-            mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            //mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            //mMap.clear();
+            for (MarkerOptions marcador : markers){
+                mMap.addMarker(marcador);
+            }
             mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
@@ -129,7 +201,11 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             Toast.makeText(this, R.string.location_changed, Toast.LENGTH_LONG).show();
             Toast.makeText(this, "Latitude :"+ mLastLocation.getLatitude() + ", longitude: "+ mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
-            mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            //mMap.addMarker(new MarkerOptions().position(position).title("My position"));
+            //mMap.clear();
+            for (MarkerOptions marcador : markers){
+                mMap.addMarker(marcador);
+            }
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
         }else {
@@ -185,4 +261,5 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
         updateLocation(location);
 
     }
+
 }

@@ -132,6 +132,7 @@ public class Chat extends AppCompatActivity {
     public void toMap(View view){
 
         Intent intent = new Intent(this, Tracking2  .class);
+        intent.putExtra("kedada", kdd_id);
         startActivity(intent);
 
     }
