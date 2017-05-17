@@ -232,7 +232,7 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                 String kddId = dataSnapshot.getKey();
                 Log.d("kddId", kddId);
                 // assign listener for changes on each kdd
-                database.getReference("kdds/" + kddId).addValueEventListener(new ValueEventListener() {
+                database.getReference("kdds/" + kddId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Kedada kdd = (Kedada) dataSnapshot.getValue(Kedada.class);
