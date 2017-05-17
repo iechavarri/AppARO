@@ -71,11 +71,9 @@ dependencies {
     //Firebase crash reports
     compile 'com.google.firebase:firebase-crash:10.2.1'
     compile 'com.google.android.gms:play-services-auth:10.2.1'
-<<<<<<< HEAD
-    compile 'com.google.android.gms:play-services-analytics:9.2.0'
-=======
-    //multidex
+    //Analitics
+    compile 'com.google.android.gms:play-services-analytics:10.2.1'
+
     compile 'com.android.support:multidex:1.0.1'
->>>>>>> 5ae90a082c645697349baabcde2e21f89fef642c
 }
 apply plugin: 'com.google.gms.google-services'
