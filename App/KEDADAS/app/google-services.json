@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "450426138778-2b010eqakp5ikr6sp0d5vq389g9pnero.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.none.kedadas",
+            "certificate_hash": "97047e56d80812f7e1256c1b204b1ef0c4f7ef37"
+          }
+        },
+        {
           "client_id": "450426138778-cejfc2bstb1a4g65uqvd1069bp47cec9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
