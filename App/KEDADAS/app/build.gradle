@@ -8,6 +8,15 @@ android {
             storePassword 'android'
             storeFile file('C:/Users/darkn/.android/debug.keystore')
         }
+        config1 {
+            keyAlias 'KedadasKey'
+            keyPassword 'appkedadas'
+            storeFile file('C:/Users/darkn/.android/debug.keystore')
+            storePassword 'android'
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
@@ -17,11 +26,13 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config1
         }
         debug {
             signingConfig signingConfigs.config
@@ -59,5 +70,8 @@ dependencies {
     //Firebase crash reports
     compile 'com.google.firebase:firebase-crash:10.2.1'
     compile 'com.google.android.gms:play-services-auth:10.2.1'
+    //Analitics
+    compile 'com.google.android.gms:play-services-analytics:10.2.1'
+    compile 'com.android.support:multidex:1.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

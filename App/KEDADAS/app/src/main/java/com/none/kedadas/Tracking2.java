@@ -188,7 +188,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             for (MarkerOptions marcador : markers){
                 mMap.addMarker(marcador);
             }
-            mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
+            mMap.moveCamera(CameraUpdateFactory.zoomBy(16));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
 
