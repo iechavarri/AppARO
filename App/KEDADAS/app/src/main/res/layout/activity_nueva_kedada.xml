@@ -60,5 +60,20 @@
         android:layout_height="wrap_content"
         android:text="Siguiente"
         android:onClick="crearChat"/>
+    <EditText
+        android:id="@+id/add_kdd_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:textIsSelectable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/add_kdd_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Compartir"
+        android:onClick="compartir"/>
 
 </LinearLayout>
