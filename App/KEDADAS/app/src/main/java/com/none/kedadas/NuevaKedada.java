@@ -114,6 +114,7 @@ public class NuevaKedada extends AppCompatActivity {
 
 
     public void compartir(View view) {
+        findViewById(R.id.add_kdd_link).setVisibility(View.VISIBLE);
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT,url);
@@ -177,6 +178,7 @@ public class NuevaKedada extends AppCompatActivity {
             url = new String("https://yhj7b.app.goo.gl/?link="+
                     "https://yhj7b.app.goo.gl/?KedadaKey="+kddId+"&apn="+"" +
                     "com.none.kedadas&afl=http://52.43.198.218");
+            findViewById(R.id.add_kdd_share).setVisibility(View.VISIBLE);
             ((EditText) findViewById(R.id.add_kdd_link)).setText(url);
             //This is going to be autocopied to clipboard
             ClipData clip = ClipData.newPlainText(url,url);
