@@ -27,12 +27,6 @@
         android:layout_alignParentStart="true" />
 
 
-    <Button
-        android:id="@+id/btnChangeDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Date" />
-
     <TextView
         android:id="@+id/textViewFecha"
         android:layout_width="match_parent"
@@ -54,11 +48,18 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/btnChangeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar fecha" />
+
     <Button
         android:id="@+id/add_kdd_next1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Siguiente"
+        android:text="Crear kedada y enlace para compartir"
         android:onClick="crearChat"/>
     <EditText
         android:id="@+id/add_kdd_link"
