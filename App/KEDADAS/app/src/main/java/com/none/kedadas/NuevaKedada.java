@@ -168,10 +168,6 @@ public class NuevaKedada extends AppCompatActivity {
             myRef.child(kddId).child("admin").setValue(uid);
             // actualizar en el nodo de usuario
             FirebaseDatabase.getInstance().getReference("users" + "/" + uid + "/" + "kdds" + "/" + kddId).setValue(true);
-
-
-            //TODO Creating deeplink for the new kedada
-
             //In this section the new link will be created
             //https://yhj7b.app.goo.gl/?link=https://yhj7b.app.goo.gl/&apn=com.none.kedadas&afl=http://52.43.198.218
             //String url = new String("https://yhj7b.app.goo.gl/"+"?link="+anotherRef.getKey()+"&apn=com.none.kedadas");
@@ -180,6 +176,8 @@ public class NuevaKedada extends AppCompatActivity {
                     "com.none.kedadas&afl=http://52.43.198.218");
             findViewById(R.id.add_kdd_share).setVisibility(View.VISIBLE);
             ((EditText) findViewById(R.id.add_kdd_link)).setText(url);
+            // disable button
+            findViewById(R.id.add_kdd_next1).setEnabled(false);
             //This is going to be autocopied to clipboard
             ClipData clip = ClipData.newPlainText(url,url);
             ClipboardManager clipboard = (ClipboardManager)this.getSystemService(CLIPBOARD_SERVICE);
