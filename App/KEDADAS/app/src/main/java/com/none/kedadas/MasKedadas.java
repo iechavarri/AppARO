@@ -2,8 +2,15 @@ package com.none.kedadas;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +29,8 @@ import com.google.android.gms.appinvite.AppInviteReferral;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +48,10 @@ import java.util.List;
  */
 
 public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+    protected GoogleApiClient mGoogleApiClient;
+    protected Location mLastLocation;
+    private LatLng position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +59,7 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
 
 
         final URL[] urlKedada = new URL[1];
-        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
+        final GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(AppInvite.API)
                 .build();
@@ -66,21 +79,75 @@ public class MasKedadas extends AppCompatActivity implements GoogleApiClient.OnC
                                     Log.d("TENEMOS UNO!!", deepLink);
 
                                     String[] trozos = deepLink.split("KedadaKey=");
-                                    String kedadaKey=trozos[1];
+                                    String kedadaKey = trozos[1];
                                     Toast.makeText(getApplicationContext(), kedadaKey, Toast.LENGTH_LONG).show();
 
                                     //Añadiendo el usuario a la kedada
                                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     if (user != null) {
-                                        Kedada.Users userToAdd = new Kedada.Users();
+                                        final Kedada.Users userToAdd = new Kedada.Users();
                                         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("kdds" + "/" + kedadaKey + "/" + "users");
                                         String uid = user.getUid();
                                         userToAdd.setUserEmail(user.getEmail());
                                         userToAdd.setUserId(user.getUid());
                                         // todo: location
-                                        userToAdd.setLatitud("56.45");
-                                        userToAdd.setLongitud("43.23");
+                                        final LocationListener locationListener = new LocationListener() {
+                                            @Override
+                                            public void onLocationChanged(Location location) {
+                                                Location mlocation = location;
+                                                Log.d("Location Changes", location.toString());
+                                                userToAdd.setLatitud(String.valueOf(location.getLatitude()));
+                                                userToAdd.setLongitud(String.valueOf(location.getLongitude()));
+                                            }
+
+                                            @Override
+                                            public void onStatusChanged(String provider, int status, Bundle extras) {
+                                                Log.d("Status Changed", String.valueOf(status));
+                                            }
+
+                                            @Override
+                                            public void onProviderEnabled(String provider) {
+                                                Log.d("Provider Enabled", provider);
+                                            }
+
+                                            @Override
+                                            public void onProviderDisabled(String provider) {
+                                                Log.d("Provider Disabled", provider);
+                                            }
+                                        };
+
+                                        // Now first make a criteria with your requirements
+                                        // this is done to save the battery life of the device
+                                        // there are various other other criteria you can search for..
+                                        Criteria criteria = new Criteria();
+                                        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+                                        criteria.setPowerRequirement(Criteria.POWER_LOW);
+                                        criteria.setAltitudeRequired(false);
+                                        criteria.setBearingRequired(false);
+                                        criteria.setSpeedRequired(false);
+                                        criteria.setCostAllowed(true);
+                                        criteria.setHorizontalAccuracy(Criteria.ACCURACY_HIGH);
+                                        criteria.setVerticalAccuracy(Criteria.ACCURACY_HIGH);
+
+                                        // Now create a location manager
+                                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+                                        // This is the Best And IMPORTANT part
+                                        Looper looper = null;
+                                        try {
+                                            locationManager.requestSingleUpdate(criteria, locationListener, looper);
+                                            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                                        } catch (SecurityException e) {e.printStackTrace();}
+                                        if (mLastLocation != null) {
+                                            position = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+                                            //TODO send the coordinates to the server
+                                            userToAdd.setLatitud(Double.toString(position.latitude));
+                                            userToAdd.setLatitud(Double.toString(position.longitude));
+                                        } else {
+                                            userToAdd.setLatitud("42.816667");
+                                            userToAdd.setLongitud("-1.65");
+                                        }
                                         myRef.child(uid).setValue(userToAdd);
                                         // añadir la kdd al usuario
                                         FirebaseDatabase.getInstance().getReference("users" + "/" + uid + "/" + "kdds" + "/" + kedadaKey).setValue(true);

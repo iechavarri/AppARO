@@ -6,16 +6,15 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
             storePassword 'android'
-            storeFile file('C:/Users/diego/.android/debug.keystore')
+
         }
         config1 {
             keyAlias 'KedadasKey'
             keyPassword 'appkedadas'
-            storeFile file('C:/Users/iecha/.android/debug.keystore')
+            storeFile file('C:/Users/darkn/.android/debug.keystore')
             storePassword 'android'
         }
     }
-
     dexOptions {
         javaMaxHeapSize "4g"
     }

@@ -80,6 +80,8 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Kedada.Users user = (Kedada.Users) dataSnapshot.getValue(Kedada.Users.class);
+                double theLat = Double.parseDouble(user.getLatitud());
+                double theLon = Double.parseDouble(user.getLongitud());
                 String toFind = user.getUserId();
                 int i;
                 for (i = 0; i<usuarios.size();i++){
@@ -88,10 +90,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
                     }
                 }
                 if (usuarios.get(i).getUserId().equals(toFind)){
-                    double theLat = Double.parseDouble(usuarios.get(i).getLatitud());
-                    double theLon = Double.parseDouble(usuarios.get(i).getLongitud());
                     markers.get(i).position(new LatLng(theLat,theLon));
-                            //.title(usuarios.get(i).getUserId());
                 }
                 refreshMap();
             }
@@ -144,7 +143,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
         //LatLng pamplona = new LatLng(42.797263,-1.6343405);
         //mMap.addMarker(new MarkerOptions().position(pamplona).title("Marker in mi posicion"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(pamplona));
-        mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
+        mMap.moveCamera(CameraUpdateFactory.zoomBy(16));
 
         //mMap.addMarker(new MarkerOptions().position(pamplona).title("My position"));
         //mMap.clear();
@@ -188,7 +187,7 @@ public class Tracking2 extends FragmentActivity implements OnMapReadyCallback, C
             for (MarkerOptions marcador : markers){
                 mMap.addMarker(marcador);
             }
-            mMap.moveCamera(CameraUpdateFactory.zoomBy(10));
+            mMap.moveCamera(CameraUpdateFactory.zoomBy(16));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
             //TODO send the coordinates to the server
 
